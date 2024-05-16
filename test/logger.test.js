@@ -12,11 +12,19 @@ describe('Logger', () => {
     const time = 1714640856354
     const offset = 0
     const formattedTime1 = getFormattedTime(time, offset)
-    expect(formattedTime1).toBe('2024-05-02 09:07:36.354')
+    expect(formattedTime1).toBe('2024-05-02T09:07:36.354Z')
 
     const offset2 = 8 * 60 // UTC+8
     const formattedTime2 = getFormattedTime(time, offset2)
-    expect(formattedTime2).toBe('2024-05-02 17:07:36.354')
+    expect(formattedTime2).toBe('2024-05-02T17:07:36.354+0800')
+
+    const offset3 = -8 * 60 // UTC-8
+    const formattedTime3 = getFormattedTime(time, offset3)
+    expect(formattedTime3).toBe('2024-05-02T01:07:36.354-0800')
+
+    const offset4 = -3 * 60 - 30 // UTC-3:30
+    const formattedTime4 = getFormattedTime(time, offset4)
+    expect(formattedTime4).toBe('2024-05-02T05:37:36.354-0330')
   })
   it('colorful', async () => {
     process.env.loggerColorLevel = 3
@@ -98,10 +106,10 @@ describe('Logger', () => {
     const scope = 'test'
     const id = 'USER001'
     const formattedPrefix1 = formatPrefix({ time, offset })
-    expect(formattedPrefix1).toBe('2024-05-02 09:07:36.354 TRACE MAIN -')
+    expect(formattedPrefix1).toBe('2024-05-02T09:07:36.354Z TRACE MAIN -')
     const formattedPrefix2 = formatPrefix({ time, offset, level, scope, id })
     expect(formattedPrefix2)
-      .toBe('2024-05-02 09:07:36.354 INFO TEST USER001 -')
+      .toBe('2024-05-02T09:07:36.354Z INFO TEST USER001 -')
   })
   it('entry', async () => {
     process.env.loggerColorLevel = 3
