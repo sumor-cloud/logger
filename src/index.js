@@ -2,7 +2,7 @@ import formatPrefix from './formatPrefix.js'
 import colorful from './colorful.js'
 
 export default class Logger {
-  constructor (options) {
+  constructor(options) {
     options = options || {}
     const scope = options.scope
     const level = (options.level || 'info').toLowerCase()

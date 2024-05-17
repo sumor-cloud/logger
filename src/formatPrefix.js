@@ -1,8 +1,6 @@
 import getFormattedTime from './getFormattedTime.js'
 
-export default ({
-  time, offset, level, scope, id
-}) => {
+export default ({ time, offset, level, scope, id }) => {
   level = level || 'trace'
   level = level.toUpperCase()
   scope = scope || 'main'

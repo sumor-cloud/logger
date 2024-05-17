@@ -12,6 +12,7 @@ It can output logs in different levels, and you can customize the scope, id, and
 [![Audit](https://github.com/sumor-cloud/logger/actions/workflows/audit.yml/badge.svg)](https://github.com/sumor-cloud/logger/actions/workflows/audit.yml)
 
 ## Installation
+
 ```bash
 npm i @sumor/logger --save
 ```
@@ -19,14 +20,17 @@ npm i @sumor/logger --save
 ## Prerequisites
 
 ### Node.JS version
+
 Require Node.JS version 16.x or above
 
 ### require Node.JS ES module
+
 As this package is written in ES module,
-please change the following code in your ```package.json``` file:
+please change the following code in your `package.json` file:
+
 ```json
 {
-    "type": "module"
+  "type": "module"
 }
 ```
 
@@ -35,66 +39,72 @@ please change the following code in your ```package.json``` file:
 ### General Usage
 
 ```js
-import Logger from '@sumor/logger';
-const logger = new Logger();
+import Logger from '@sumor/logger'
+const logger = new Logger()
 
-logger.trace("Hello World!");
+logger.trace('Hello World!')
 // You will see the following output:
 // 2020-01-01 00:00:00.000 TRACE MAIN - Hello World!
 ```
 
 ### Change Scope
+
 For some case, we need categorize logs. `scope` is used for this purpose.
+
 ```js
-import Logger from '@sumor/logger';
+import Logger from '@sumor/logger'
 const logger = new Logger({
-    scope: 'DEMO'
-});
-logger.trace("Hello World!");
+  scope: 'DEMO'
+})
+logger.trace('Hello World!')
 // You will see the following output:
 // 2020-01-01 00:00:00.000 TRACE DEMO - Hello World!
 ```
 
 ### Identifier User
+
 For some case, we need identifier user. `id` is used for this purpose.
+
 ```js
-import Logger from '@sumor/logger';
+import Logger from '@sumor/logger'
 const logger = new Logger({
-    id: 'USER001'
-});
-logger.trace("Hello World!");
+  id: 'USER001'
+})
+logger.trace('Hello World!')
 // You will see the following output:
 // 2020-01-01 00:00:00.000 TRACE MAIN USER001 - Hello World!
 ```
 
 ### Change Level
+
 Most of the time, we only need to output logs of a certain level. Then we can decide if store and display it or not.
+
 ```js
-import Logger from '@sumor/logger';
-const logger = new Logger();
-logger.trace("Hello World!"); // trace is the lowest level, all logs will be output
-logger.debug("Hello World!");
-logger.info("Hello World!");
-logger.warn("Hello World!");
-logger.error("Hello World!");
-logger.fatal("Hello World!"); // fatal is the highest level, only critical error will be output
+import Logger from '@sumor/logger'
+const logger = new Logger()
+logger.trace('Hello World!') // trace is the lowest level, all logs will be output
+logger.debug('Hello World!')
+logger.info('Hello World!')
+logger.warn('Hello World!')
+logger.error('Hello World!')
+logger.fatal('Hello World!') // fatal is the highest level, only critical error will be output
 ```
 
 ### Change Timezone
+
 ```js
-import Logger from '@sumor/logger';
+import Logger from '@sumor/logger'
 const logger1 = new Logger({
-    offset: 2 * 60 // UTC+2 offset is 2 hours
-});
-logger1.info("Hello World!");
+  offset: 2 * 60 // UTC+2 offset is 2 hours
+})
+logger1.info('Hello World!')
 // You will see the following output:
 // 2020-01-01 02:00:00.000 INFO MAIN - Hello World!
 
 const logger2 = new Logger({
-    offset: 8 * 60 // UTC+8 offset is 8 hours
-});
-logger2.info("Hello World!");
+  offset: 8 * 60 // UTC+8 offset is 8 hours
+})
+logger2.info('Hello World!')
 // You will see the following output:
 // 2020-01-01 08:00:00.000 INFO MAIN - Hello World!
-
 ```

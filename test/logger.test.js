@@ -1,6 +1,4 @@
-import {
-  describe, expect, it
-} from '@jest/globals'
+import { describe, expect, it } from '@jest/globals'
 
 import getFormattedTime from '../src/getFormattedTime.js'
 import colorful from '../src/colorful.js'
@@ -108,8 +106,7 @@ describe('Logger', () => {
     const formattedPrefix1 = formatPrefix({ time, offset })
     expect(formattedPrefix1).toBe('2024-05-02T09:07:36.354Z TRACE MAIN -')
     const formattedPrefix2 = formatPrefix({ time, offset, level, scope, id })
-    expect(formattedPrefix2)
-      .toBe('2024-05-02T09:07:36.354Z INFO TEST USER001 -')
+    expect(formattedPrefix2).toBe('2024-05-02T09:07:36.354Z INFO TEST USER001 -')
   })
   it('entry', async () => {
     process.env.loggerColorLevel = 3
