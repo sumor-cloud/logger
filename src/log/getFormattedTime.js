@@ -1,9 +1,11 @@
 export default (time, offset) => {
-  let defaultOffset = 0
+  let defaultOffset = -new Date().getTimezoneOffset()
   if (process.env.loggerTimeOffset) {
     defaultOffset = parseInt(process.env.loggerTimeOffset, 10)
   }
-  offset = offset || defaultOffset
+  if (offset === undefined || offset === null) {
+    offset = defaultOffset
+  }
   // format yyyy-mm-dd hh:mm:ss.SSS
   const date = new Date(time + offset * 60 * 1000)
   const year = date.getUTCFullYear()

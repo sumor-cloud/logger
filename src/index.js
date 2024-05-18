@@ -1,61 +1,44 @@
-import formatPrefix from './formatPrefix.js'
-import colorful from './colorful.js'
+import filterLevels from './filterLevels.js'
+import levels from './levels.js'
+import combine from './log/index.js'
+import codeUtils from './code/index.js'
 
 export default class Logger {
   constructor(options) {
     options = options || {}
-    const scope = options.scope
-    const level = (options.level || 'info').toLowerCase()
-    const id = options.id
-    let offset = options.offset
-    if (options.offset === undefined) {
-      offset = -new Date().getTimezoneOffset()
-    }
-    const types = ['trace', 'debug', 'info', 'warn', 'error', 'fatal']
+    options.code = options.code || {}
+    options.i18n = options.i18n || {}
+    options.language = options.language || 'en-US'
+    this._codeUtils = codeUtils(options)
 
-    const getElementsSinceElement = (arr, ele) => {
-      const index = arr.indexOf(ele)
-      return index === -1 ? [] : arr.slice(index)
-    }
-    const displayedLevels = getElementsSinceElement(types, level)
-    for (let i = 0; i < types.length; i += 1) {
-      const type = types[i]
-      if (displayedLevels.indexOf(type) === -1) {
-        this[type] = function () {}
+    const displayedLevels = filterLevels(options.level)
+    for (let i = 0; i < levels.length; i += 1) {
+      const level = levels[i]
+      if (displayedLevels.indexOf(level) === -1) {
+        this[level] = function () {}
       } else {
-        this[type] = function () {
-          const time = Date.now()
-
-          const prefix = formatPrefix({
-            time,
-            offset,
-            level: type,
-            scope,
-            id
-          })
-          const colorfulPrefix = colorful(level, prefix)
-
-          const logArray = [colorfulPrefix]
-          for (let j = 0; j < arguments.length; j += 1) {
-            logArray.push(arguments[j])
-          }
+        this[level] = function () {
+          const logArray = combine(
+            {
+              offset: options.offset,
+              level,
+              scope: options.scope,
+              id: options.id
+            },
+            arguments
+          )
           console.log.apply(console, logArray)
-
-          try {
-            let logStr = ''
-            for (const item of logArray) {
-              if (typeof item === 'string') {
-                logStr += item
-              } else {
-                logStr += JSON.stringify(item)
-              }
-            }
-            return logStr
-          } catch (e) {
-            return undefined
-          }
         }
       }
+    }
+  }
+
+  code(code, parameters) {
+    const { level, message } = this._codeUtils(code, parameters)
+    if (levels.indexOf(level) > -1) {
+      this[level](code, message)
+    } else {
+      this.error(code, parameters)
     }
   }
 }

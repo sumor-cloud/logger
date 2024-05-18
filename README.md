@@ -108,3 +108,62 @@ logger2.info('Hello World!')
 // You will see the following output:
 // 2020-01-01 08:00:00.000 INFO MAIN - Hello World!
 ```
+
+### Predefined Code
+
+```js
+import Logger from '@sumor/logger'
+const code = {
+  trace: {
+    HTTP_ACCESS: 'The user accesses via HTTP and the IP address is {ip}'
+  },
+  debug: {
+    USER_TOKEN_LOADED: 'The user login information is read and the user ID is {id}'
+  },
+  info: {
+    USER_LOGIN: 'The user logs in and the user ID is {id}'
+  },
+  warn: {
+    USER_LOGOUT: 'The user logs out and the user ID is {id}'
+  },
+  error: {
+    USER_LOGIN_FAILED: 'The user login failed and the user ID is {id}'
+  },
+  fatal: {
+    USER_LOGIN_BLOCKED: 'The user login is blocked and the user ID is {id}'
+  }
+}
+const i18n = {
+  zh: {
+    USER_LOGIN: '用户登录，用户ID为{id}'
+  }
+}
+const logger1 = new Logger({
+  code,
+  i18n
+})
+
+logger1.code('USER_LOGIN', { id: 'USER001' })
+// You will see the following output:
+// 2020-01-01 00:00:00.000 INFO MAIN - The user logs in and the user ID is USER001
+
+const logger2 = new Logger({
+  code,
+  i18n,
+  language: 'zh-US'
+})
+
+logger2.code('USER_LOGIN', { id: 'USER001' })
+// You will see the following output:
+// 2020-01-01 00:00:00.000 INFO MAIN - The user logs in and the user ID is USER001
+
+const logger3 = new Logger({
+  code,
+  i18n,
+  language: 'zh-CN'
+})
+
+logger3.code('USER_LOGIN', { id: 'USER001' })
+// You will see the following output:
+// 2020-01-01 00:00:00.000 INFO MAIN - 用户登录，用户ID为USER001
+```
