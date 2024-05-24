@@ -1,7 +1,7 @@
 # logger
 
 A [Sumor Cloud](https://sumor.cloud) Tool.  
-[More Documentation](https://sumor.cloud)
+[More Documentation](https://sumor.cloud/logger)
 
 This is a lightweight logger for Node.JS.
 It can output logs in different levels, and you can customize the scope, id, and timezone.
