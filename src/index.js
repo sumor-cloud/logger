@@ -36,7 +36,7 @@ export default class Logger {
   code(code, parameters) {
     const { level, message } = this._codeUtils(code, parameters)
     if (levels.indexOf(level) > -1) {
-      this[level](code, message)
+      this[level](message)
     } else {
       this.error(code, parameters)
     }
