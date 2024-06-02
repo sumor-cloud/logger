@@ -8,7 +8,6 @@ export default class Logger {
     options = options || {}
     options.code = options.code || {}
     options.i18n = options.i18n || {}
-    options.language = options.language || 'en-US'
     this._codeUtils = codeUtils(options)
 
     const displayedLevels = filterLevels(options.level)
