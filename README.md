@@ -193,3 +193,38 @@ logger.code('USER_LOGIN', { id: 'USER001' })
 // You will see the following output:
 // 2020-01-01 00:00:00.000 INFO MAIN - 用户登录，用户ID为USER001
 ```
+
+### Filter Level
+
+When you want to filter logs by level, you can use the following code:
+
+```js
+import Logger from '@sumor/logger'
+const logger = new Logger({
+  level: 'info'
+})
+logger.trace('Hello World!') // trace is the lowest level, will not be output
+logger.debug('Hello World!') // debug is lower than info, will not be output
+logger.info('Hello World!') // info is the same as info, will be output
+logger.warn('Hello World!') // warn is higher than info, will be output
+logger.error('Hello World!') // error is higher than info, will be output
+logger.fatal('Hello World!') // fatal is the highest level, will be output
+```
+
+When you use this library cross multiple libraries, you can use the following code:
+
+```js
+import Logger from '@sumor/logger'
+const logger = new Logger()
+process.env.LOG_LEVEL = 'info'
+
+logger.trace('Hello World!') // trace is the lowest level, will not be output
+logger.debug('Hello World!') // debug is lower than info, will not be output
+logger.info('Hello World!') // info is the same as info, will be output
+logger.warn('Hello World!') // warn is higher than info, will be output
+logger.error('Hello World!') // error is higher than info, will be output
+
+process.env.LOG_LEVEL = 'warn' // real-time change log level
+logger.info('Hello World!') // info is lower than warn, will not be output
+
+```
