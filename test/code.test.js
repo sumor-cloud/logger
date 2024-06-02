@@ -116,4 +116,32 @@ describe('code', () => {
     const result7 = codeUtilsInstance('UNKNOWN_CODE', { id: 'USER001' })
     expect(result7).toEqual({})
   })
+
+  it('code utils with global language', () => {
+    const code = {
+      info: {
+        USER_LOGIN: 'The user logs in and the user ID is {id}'
+      }
+    }
+    const i18n = {
+      zh: {
+        USER_LOGIN: '用户登录，用户ID为{id}'
+      }
+    }
+    const codeUtilsInstance = codeUtils({
+      code,
+      i18n
+    })
+    const result1 = codeUtilsInstance('USER_LOGIN', { id: 'USER001' })
+    expect(result1.message).toBe('The user logs in and the user ID is USER001')
+
+    process.env.LANGUAGE = 'zh'
+    const result2 = codeUtilsInstance('USER_LOGIN', { id: 'USER001' })
+    expect(result2.message).toBe('用户登录，用户ID为USER001')
+
+    delete process.env.LANGUAGE
+
+    const result3 = codeUtilsInstance('USER_LOGIN', { id: 'USER001' })
+    expect(result3.message).toBe('The user logs in and the user ID is USER001')
+  })
 })

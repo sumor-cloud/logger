@@ -167,3 +167,29 @@ logger3.code('USER_LOGIN', { id: 'USER001' })
 // You will see the following output:
 // 2020-01-01 00:00:00.000 INFO MAIN - 用户登录，用户ID为USER001
 ```
+
+### Global Language Setting
+
+```js
+process.env.LANGUAGE = 'zh-CN'
+import Logger from '@sumor/logger'
+
+const code = {
+  info: {
+    USER_LOGIN: 'The user logs in and the user ID is {id}'
+  }
+}
+const i18n = {
+  zh: {
+    USER_LOGIN: '用户登录，用户ID为{id}'
+  }
+}
+const logger = new Logger({
+  code,
+  i18n
+})
+
+logger.code('USER_LOGIN', { id: 'USER001' })
+// You will see the following output:
+// 2020-01-01 00:00:00.000 INFO MAIN - 用户登录，用户ID为USER001
+```
