@@ -10,7 +10,7 @@ export default class Logger {
     options.i18n = options.i18n || {}
     this._codeUtils = codeUtils(options)
 
-    const displayedLevels = filterLevels(options.level)
+    const displayedLevels = filterLevels(options.level || process.env.LOG_LEVEL)
     for (let i = 0; i < levels.length; i += 1) {
       const level = levels[i]
       if (displayedLevels.indexOf(level) === -1) {
