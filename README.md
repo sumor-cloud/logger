@@ -226,5 +226,4 @@ logger.error('Hello World!') // error is higher than info, will be output
 
 process.env.LOG_LEVEL = 'warn' // real-time change log level
 logger.info('Hello World!') // info is lower than warn, will not be output
-
 ```

@@ -2,6 +2,7 @@ import filterLevels from './filterLevels.js'
 import levels from './levels.js'
 import combine from './log/index.js'
 import codeUtils from './code/index.js'
+import supportSumorError from './supportSumorError.js'
 
 export default class Logger {
   constructor(options) {
@@ -24,7 +25,7 @@ export default class Logger {
               scope: options.scope,
               id: options.id
             },
-            arguments
+            supportSumorError(arguments, options.language || process.env.LANGUAGE || 'en-US')
           )
           console.log.apply(console, logArray)
         }

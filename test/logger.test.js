@@ -2,6 +2,21 @@ import { describe, expect, it } from '@jest/globals'
 
 import filterLevels from '../src/filterLevels.js'
 import Logger from '../src/index.js'
+import supportSumorError from '../src/supportSumorError.js'
+
+import defineError from '@sumor/error'
+
+const LibraryError = defineError({
+  code: {
+    ERROR1: 'Error is {status}'
+  },
+  // languages: en, zh, es, ar, fr, ru, de, pt, ja, ko
+  i18n: {
+    zh: {
+      ERROR1: '错误是{status}'
+    }
+  }
+})
 
 describe('entry', () => {
   it('filter levels', () => {
@@ -102,5 +117,18 @@ describe('entry', () => {
     logger1.code('USER_LOGIN_FAILED', { id: 'USER001' })
     logger1.code('USER_LOGIN_BLOCKED', { id: 'USER001' })
     logger1.code('UNKNOWN_CODE', { id: 'USER001' })
+  })
+
+  it('support sumor error', () => {
+    const error = new LibraryError('ERROR1', { status: 'network_error' })
+    expect(error.message).toEqual('Error is network_error')
+    const args = supportSumorError([error], 'zh-CN')
+    expect(args[0].message).toEqual('错误是network_error')
+
+    const logger = new Logger()
+    process.env.LANGUAGE = 'en'
+    logger.error('Demo for support sumor error:', error)
+    process.env.LANGUAGE = 'zh-CN'
+    logger.error('支持sumor错误的演示：', error)
   })
 })

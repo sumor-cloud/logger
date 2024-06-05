@@ -17,6 +17,7 @@
     "@sumor/i18n": "^1.0.1"
   },
   "devDependencies": {
+    "@sumor/error": "^1.0.4",
     "@jest/globals": "^29.7.0",
     "axios": "^1.6.8",
     "eslint": "^8.57.0",
